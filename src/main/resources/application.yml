@@ -1,0 +1,55 @@
+spring:
+profiles:
+group:
+"local": "localdb,common,security"
+"prod":  "proddb,common,security"
+active: local
+---
+spring: #local DB??
+config:
+activate:
+on-profile: "localdb"
+datasource:
+driver-class-name: org.h2.Driver
+username: 'sa'
+password: ''
+url: jdbc:h2:tcp://localhost/~/tdMindJelly
+jpa:
+show-sql: 'false'
+hibernate:
+ddl-auto: create
+
+---
+spring: #??
+config:
+activate:
+on-profile: "common"
+sql:
+init:
+mode: always
+servlet:
+multipart:
+maxFileSize: 100MB
+maxRequestSize: 100MB
+server:
+tomcat:
+connection-timeout: 5000
+
+scheduler:
+time: "0 0 7 * * *"
+
+
+---
+spring: #?????
+config:
+activate:
+on-profile: "security"
+mail:
+host: smtp.gmail.com
+port: '587'
+username: wlsgur348@gmail.com
+password: oxctettjpfzocaeu
+properties.mail.smtp:
+auth: true
+starttls.enable: true
+
