@@ -29,10 +29,38 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @Column(unique = true, length = 16)
+    private String mobilePhoneNumber; //핸드폰 번호
+
+    @Column(nullable = false, unique = true)
+    private String email; //이메일
+
     @Column
-    private String email;
+    private String password; //비밀번호
 
+    @Column
+    private String userName; //실제 이름
 
+    @Column
+    private String nickName; //닉네임
+
+    @Column
+    private Boolean gender; // 성별
+
+    @Column
+    private String birthDate; //생일
+
+    @Column
+    private String profileImage; // 프로필 이미지
+
+    @Column
+    private int point; // 포인트
+
+    @Column
+    private String ageRange; //연령대
+
+    @Column
+    private Boolean isMarketing; //마케팅 정보 수신 동의
 
     @JsonIgnore
     @OneToMany(mappedBy = "jelly", cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -41,4 +69,32 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "agedEmo", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<AgedEmo> agedEmoList =new ArrayList<>();
+
+    @Builder
+    public User(Long userId, String mobilePhoneNumber, String email, String password, String userName,
+                String nickName, Boolean gender, String birthDate, String profileImage, int point,
+                String ageRange, Boolean isMarketing, List<Jelly> jellyList, List<AgedEmo> agedEmoList) {
+        this.userId = userId;
+        this.mobilePhoneNumber = mobilePhoneNumber;
+        this.email = email;
+        this.password = password;
+        this.userName = userName;
+        this.nickName = nickName;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.profileImage = profileImage;
+        this.point = point;
+        this.ageRange = ageRange;
+        this.isMarketing = isMarketing;
+        this.jellyList = jellyList != null ? jellyList : new ArrayList<>();
+        this.agedEmoList = agedEmoList != null ? agedEmoList : new ArrayList<>();
+    }
+
+    public void updateUser(String password, String nickName,
+                           String profileImage, Boolean isMarketing){
+        this.password = (password != null)? password:this.password;
+        this.nickName = (nickName != null)? nickName:this.nickName;
+        this.profileImage = (profileImage != null)? profileImage:this.profileImage;
+        this.isMarketing = (isMarketing != null)? isMarketing:this.isMarketing;
+    }
 }

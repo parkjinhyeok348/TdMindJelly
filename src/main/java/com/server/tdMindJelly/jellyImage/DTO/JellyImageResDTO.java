@@ -12,4 +12,5 @@ package com.server.tdMindJelly.jellyImage.DTO;
  * @date : 2024-12-23
  */
 public class JellyImageResDTO {
+
 }

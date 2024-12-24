@@ -1,5 +1,10 @@
 package com.server.tdMindJelly.user.DTO;
 
+import com.server.tdMindJelly.user.User;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 /**
  * @author : Jinhyeok
  * @version : 1.0
@@ -11,5 +16,18 @@ package com.server.tdMindJelly.user.DTO;
  * @modification : 2024-12-23 (Jinhyeok)
  * @date : 2024-12-23
  */
+@Getter
+@NoArgsConstructor
 public class UserUpdateReqDTO {
+    private String password;
+    private String nickName;
+    private String profileImage;
+    private Boolean isMarketing;
+    @Builder
+    public UserUpdateReqDTO(String password, String nickName, String profileImage, Boolean isMarketing) {
+        this.password = password;
+        this.nickName = nickName;
+        this.profileImage = profileImage;
+        this.isMarketing = isMarketing;
+    }
 }

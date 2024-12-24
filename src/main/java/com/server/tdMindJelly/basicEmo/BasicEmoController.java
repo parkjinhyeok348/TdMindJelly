@@ -3,6 +3,7 @@ package com.server.tdMindJelly.basicEmo;
 import com.server.tdMindJelly.basicEmo.DTO.BasicEmoResDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,16 +29,17 @@ public class BasicEmoController {
 
     private final BasicEmoService basicEmoService;
 
-    // 감정id로 감정 1개 조회
-    @GetMapping(value = "basicEmo/{emoId}")
-    public BasicEmoResDTO getBasicEmo(@PathVariable("emoId")Long emoId){
-        return basicEmoService.getBasicEmoById(emoId);
+    @GetMapping("/{emoId}")
+    public ResponseEntity<BasicEmoResDTO> getBasicEmoById(@PathVariable Long emoId) {
+        BasicEmoResDTO basicEmoResDTO = basicEmoService.getBasicEmoById(emoId);
+        return ResponseEntity.ok(basicEmoResDTO);
     }
 
-    // 감정 리스트 전부 조회
-    @GetMapping(value = "basicEmo/all")
-    public List<BasicEmoResDTO> getAllBasicEmoList(){
-        return basicEmoService.getAllBasicEmoList();
+    // 모든 기본 감정 리스트 조회
+    @GetMapping
+    public ResponseEntity<List<BasicEmoResDTO>> getAllBasicEmoList() {
+        List<BasicEmoResDTO> basicEmoList = basicEmoService.getAllBasicEmoList();
+        return ResponseEntity.ok(basicEmoList);
     }
 
 }
