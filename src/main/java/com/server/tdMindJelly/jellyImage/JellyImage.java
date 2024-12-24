@@ -1,5 +1,11 @@
 package com.server.tdMindJelly.jellyImage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.server.tdMindJelly.jelly.Jelly;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 /**
  * @author : Jinhyeok
  * @version : 1.0
@@ -11,5 +17,23 @@ package com.server.tdMindJelly.jellyImage;
  * @modification : 2024-12-23 (Jinhyeok)
  * @date : 2024-12-23
  */
+@Getter
+@Entity
+@NoArgsConstructor
+@Table(name="jellyImage")
 public class JellyImage {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long jellyImageListId;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jellyId", insertable = false, updatable=false)
+    private Jelly jelly;
+
+    @Column(nullable = false)
+    private Long jellyId;
+
+    @Column(nullable = false)
+    private String imageName;
 }

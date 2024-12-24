@@ -23,6 +23,7 @@ public class UserUpdateReqDTO {
     private String nickName;
     private String profileImage;
     private Boolean isMarketing;
+
     @Builder
     public UserUpdateReqDTO(String password, String nickName, String profileImage, Boolean isMarketing) {
         this.password = password;
