@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = "/v1")
+@RequestMapping(value = "/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -77,5 +77,11 @@ public class UserController {
     public ResponseEntity<Boolean> checkDuplicateNickName(@RequestParam String nickName) {
         Boolean isNickNameAvailable = userService.checkDuplicateNickName(nickName);
         return ResponseEntity.ok(isNickNameAvailable);
+    }
+
+    // 사용자 삭제
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable("userId")Long userId){
+        userService.deleteUser(userId);
     }
 }

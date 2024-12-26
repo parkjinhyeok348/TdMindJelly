@@ -85,4 +85,11 @@ public class Jelly {
         this.createDate = createDate;
         this.jellyImages=jellyImages;
     }
+
+    public void updateJelly(String jellyName, String content,
+                           List<JellyImage> jellyImages){
+        this.jellyName = (jellyName != null && !jellyName.isBlank())? jellyName:this.jellyName;
+        this.content = (content != null&& !content.isBlank())? content:this.content;
+        this.jellyImages = (jellyImages != null)? new ArrayList<>(jellyImages):this.jellyImages;
+    }
 }

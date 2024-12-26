@@ -71,5 +71,11 @@ public class UserService {
         User user = userRepository.findByNickName(nickName);
         return user == null;
     }
+    
+    // 유저 계정 삭제
+    public void deleteUser(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        userRepository.deleteById(userId);
+    }
 
 }

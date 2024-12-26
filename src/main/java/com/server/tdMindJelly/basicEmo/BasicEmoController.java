@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/v1")
+@RequestMapping(value = "/basicEmo")
 @RequiredArgsConstructor
 public class BasicEmoController {
 

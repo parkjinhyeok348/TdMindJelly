@@ -1,5 +1,10 @@
 package com.server.tdMindJelly.jelly;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
 /**
  * @author : Jinhyeok
  * @version : 1.0
@@ -11,5 +16,6 @@ package com.server.tdMindJelly.jelly;
  * @modification : 2024-12-23 (Jinhyeok)
  * @date : 2024-12-23
  */
-public interface JellyRepository {
+public interface JellyRepository extends JpaRepository<Jelly,Long> {
+    List<Jelly> findByUserId(@Param("userId")Long userId);
 }
