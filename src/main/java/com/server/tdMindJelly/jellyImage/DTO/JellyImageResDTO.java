@@ -1,5 +1,10 @@
 package com.server.tdMindJelly.jellyImage.DTO;
 
+import com.server.tdMindJelly.jellyImage.JellyImage;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 /**
  * @author : Jinhyeok
  * @version : 1.0
@@ -11,6 +16,17 @@ package com.server.tdMindJelly.jellyImage.DTO;
  * @modification : 2024-12-23 (Jinhyeok)
  * @date : 2024-12-23
  */
+@Getter
+@NoArgsConstructor
 public class JellyImageResDTO {
+    private Long jellyImageId;
+    private Long jellyId;
+    private String imageName;
 
+    @Builder
+    public JellyImageResDTO(JellyImage jellyImage){
+        this.jellyImageId = jellyImage.getJellyImageListId();
+        this.jellyId = jellyImage.getJellyId();
+        this.imageName = jellyImage.getImageName();
+    }
 }

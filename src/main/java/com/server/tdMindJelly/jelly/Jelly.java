@@ -68,7 +68,7 @@ public class Jelly {
     private LocalDate createDate; // 생성 날짜
 
     @JsonIgnore
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "jelly", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<JellyImage> jellyImages =new ArrayList<>(); //젤리에 들어갈 사진 리스트
 
     @Builder
@@ -90,6 +90,9 @@ public class Jelly {
                            List<JellyImage> jellyImages){
         this.jellyName = (jellyName != null && !jellyName.isBlank())? jellyName:this.jellyName;
         this.content = (content != null&& !content.isBlank())? content:this.content;
-        this.jellyImages = (jellyImages != null)? new ArrayList<>(jellyImages):this.jellyImages;
+        if(jellyImages !=null){
+            this.jellyImages.clear();
+            this.jellyImages.addAll(jellyImages);
+        }
     }
 }

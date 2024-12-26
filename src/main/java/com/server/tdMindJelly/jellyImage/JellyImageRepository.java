@@ -1,5 +1,10 @@
 package com.server.tdMindJelly.jellyImage;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
 /**
  * @author : Jinhyeok
  * @version : 1.0
@@ -11,5 +16,6 @@ package com.server.tdMindJelly.jellyImage;
  * @modification : 2024-12-23 (Jinhyeok)
  * @date : 2024-12-23
  */
-public interface JellyImageRepository {
+public interface JellyImageRepository extends JpaRepository<JellyImage, Long> {
+    List<JellyImage> findByJellyId(@Param("jellyId") Long jellyId);
 }

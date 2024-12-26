@@ -3,6 +3,7 @@ package com.server.tdMindJelly.jellyImage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tdMindJelly.jelly.Jelly;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,4 +37,10 @@ public class JellyImage {
 
     @Column(nullable = false)
     private String imageName;
+
+    @Builder
+    public JellyImage(Long jellyId, String imageName){
+        this.jellyId = jellyId;
+        this.imageName = imageName;
+    }
 }
