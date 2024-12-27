@@ -47,8 +47,5 @@ public class JellyImageService {
                 .map(JellyImageResDTO::new) // 각 젤리이미지를 ResDTO로 변환
                 .collect(Collectors.toList());
     }
-    
-    //젤리 이미지 삭제
-    public void deleteJellyImage(){jellyImageRepository.deleteAll();}
 
 }

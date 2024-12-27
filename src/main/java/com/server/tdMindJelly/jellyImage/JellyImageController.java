@@ -41,12 +41,5 @@ public class JellyImageController {
         List<JellyImageResDTO> jellyImageList = jellyImageService.getJellyImageList(jellyId);
         return ResponseEntity.ok(jellyImageList);
     }
-
-    // 젤리 이미지 전체 삭제
-    @DeleteMapping
-    public ResponseEntity<Void> deleteAllJellyImages() {
-        jellyImageService.deleteJellyImage();
-        return ResponseEntity.noContent().build();
-    }
 }
 
