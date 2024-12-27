@@ -17,5 +17,4 @@ import java.util.List;
  * @date : 2024-12-23
  */
 public interface BasicEmoRepository extends JpaRepository<BasicEmo,Long> {
-    BasicEmo findByEmoId(@Param("emoId")Long emoId);
 }

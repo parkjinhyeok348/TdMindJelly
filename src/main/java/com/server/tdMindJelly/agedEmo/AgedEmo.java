@@ -67,9 +67,8 @@ public class AgedEmo {
     private List<AgedEmoImage> agedEmoImages =new ArrayList<>(); //젤리에 들어갈 사진 리스트
 
     @Builder
-    public AgedEmo(Long agedEmoId, Long userId, Long jellyCombId,String agedEmoName,
+    public AgedEmo(Long userId, Long jellyCombId,String agedEmoName,
                    String content, LocalDate createDate,List<AgedEmoImage> agedEmoImages) {
-        this.agedEmoId = agedEmoId;
         this.userId = userId;
         this.jellyCombId = jellyCombId;
         this.agedEmoName = agedEmoName;

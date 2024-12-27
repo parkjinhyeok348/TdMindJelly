@@ -19,13 +19,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AgedEmoImageResDTO {
-    private Long agedEmoImageId;
+    private Long agedEmoImageListId;
     private Long agedEmoId;
     private String imageName;
 
     @Builder
     public AgedEmoImageResDTO(AgedEmoImage agedEmoImage){
-        this.agedEmoImageId = agedEmoImage.getAgedEmoImageListId();
+        this.agedEmoImageListId = agedEmoImage.getAgedEmoImageListId();
         this.agedEmoId = agedEmoImage.getAgedEmoId();
         this.imageName = agedEmoImage.getImageName();
     }

@@ -31,8 +31,7 @@ public class BasicEmo {
     private String emoIcon;
 
     @Builder
-    public BasicEmo(Long emoId,String emoName,String emoIcon){
-        this.emoId = emoId;
+    public BasicEmo(String emoName,String emoIcon){
         this.emoName = emoName;
         this.emoIcon=emoIcon;
     }

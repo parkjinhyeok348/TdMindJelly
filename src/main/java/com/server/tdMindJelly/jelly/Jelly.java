@@ -75,9 +75,8 @@ public class Jelly {
     private List<JellyImage> jellyImages =new ArrayList<>(); //젤리에 들어갈 사진 리스트
 
     @Builder
-    public Jelly(Long jellyId, Long userId, Long jellyCombId, String jellyName, String content,
+    public Jelly(Long userId, Long jellyCombId, String jellyName, String content,
                  Boolean isAging, LocalDate agingPeriod, LocalDate createDate, List<JellyImage> jellyImages) {
-        this.jellyId = jellyId;
         this.userId = userId;
         this.jellyCombId = jellyCombId;
         this.jellyName = jellyName;

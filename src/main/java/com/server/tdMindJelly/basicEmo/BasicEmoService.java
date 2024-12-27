@@ -1,6 +1,7 @@
 package com.server.tdMindJelly.basicEmo;
 
 import com.server.tdMindJelly.basicEmo.DTO.BasicEmoResDTO;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +29,13 @@ public class BasicEmoService {
 
     private final BasicEmoRepository basicEmoRepository;
 
+    // 기본 감정 상세 정보 조회
     public BasicEmoResDTO getBasicEmoById(Long emoId){
-        BasicEmo basicEmo = basicEmoRepository.findByEmoId(emoId);
+        BasicEmo basicEmo = basicEmoRepository.findById(emoId).orElseThrow(() -> new EntityNotFoundException("BasicEmo not found"));
         return new BasicEmoResDTO(basicEmo);
     }
 
+    // 기본 감정 전체 목록 출력
     public List<BasicEmoResDTO> getAllBasicEmoList(){
         List<BasicEmo> basicEmoList = basicEmoRepository.findAll();
         return basicEmoList.stream()

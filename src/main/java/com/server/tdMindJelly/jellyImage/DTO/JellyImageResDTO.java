@@ -19,13 +19,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class JellyImageResDTO {
-    private Long jellyImageId;
+    private Long jellyImageListId;
     private Long jellyId;
     private String imageName;
 
     @Builder
     public JellyImageResDTO(JellyImage jellyImage){
-        this.jellyImageId = jellyImage.getJellyImageListId();
+        this.jellyImageListId = jellyImage.getJellyImageListId();
         this.jellyId = jellyImage.getJellyId();
         this.imageName = jellyImage.getImageName();
     }

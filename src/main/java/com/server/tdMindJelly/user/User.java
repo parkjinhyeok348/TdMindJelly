@@ -71,10 +71,9 @@ public class User {
     private List<AgedEmo> agedEmoList =new ArrayList<>();
 
     @Builder
-    public User(Long userId, String mobilePhoneNumber, String email, String password, String userName,
+    public User(String mobilePhoneNumber, String email, String password, String userName,
                 String nickName, Boolean gender, String birthDate, String profileImage, int point,
                 String ageRange, Boolean isMarketing, List<Jelly> jellyList, List<AgedEmo> agedEmoList) {
-        this.userId = userId;
         this.mobilePhoneNumber = mobilePhoneNumber;
         this.email = email;
         this.password = password;
