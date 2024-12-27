@@ -24,9 +24,9 @@ import java.util.List;
 @NoArgsConstructor
 public class JellyResDTO {
     private Long jellyId;
+    private Long userId; // 유저 아이디
+    private Long jellyCombId; // 젤리 조합 id
     private String jellyName; //젤리 이름
-    private Long firstEmo; // 첫 번째 감정 아이디
-    private Long secondEmo; //두 번째 감정 아이디
     private String content; // 젤리에 남길 메모
     private Boolean isAging; // 숙성 여부
     private LocalDate agingPeriod; // 숙성 기간
@@ -36,9 +36,9 @@ public class JellyResDTO {
     @Builder
     public JellyResDTO(Jelly jelly) {
         this.jellyId = jelly.getJellyId();
+        this.userId = jelly.getUserId();
+        this.jellyCombId = jelly.getJellyCombId();
         this.jellyName = jelly.getJellyName();
-        this.firstEmo = jelly.getFirstEmo();
-        this.secondEmo = jelly.getSecondEmo();
         this.content = jelly.getContent();
         this.isAging = jelly.getIsAging();
         this.agingPeriod = jelly.getAgingPeriod();

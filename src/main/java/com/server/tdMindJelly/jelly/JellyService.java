@@ -56,7 +56,7 @@ public class JellyService {
         return new JellyResDTO(entity);
     }
 
-    // 젤리 서랍에 개인 젤리 목록 출력하기
+    // 젤리 서랍에 개인 젤리 목록 출력
     public List<JellyDrawerResDTO> getJellyList(Long userId) {
         return Optional.ofNullable(jellyRepository.findByUserId(userId))
                 .orElse(Collections.emptyList())

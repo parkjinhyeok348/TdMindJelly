@@ -2,6 +2,7 @@ package com.server.tdMindJelly.jelly;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.server.tdMindJelly.JellyCombination.JellyCombination;
 import com.server.tdMindJelly.jellyImage.JellyImage;
 import com.server.tdMindJelly.user.User;
 import jakarta.persistence.*;
@@ -42,14 +43,16 @@ public class Jelly {
     @Column(nullable = false)
     private Long userId;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jellyCombId", insertable = false, updatable=false)
+    private JellyCombination jellyCombination;
+
+    @Column(nullable = false)
+    private Long jellyCombId;
+
     @Column
     private String jellyName; //젤리 이름
-
-    @Column(nullable = false)
-    private Long firstEmo; // 첫 번째 감정 아이디
-
-    @Column(nullable = false)
-    private Long secondEmo; //두 번째 감정 아이디
 
     @Column
     private String content; // 젤리에 남길 메모
@@ -72,13 +75,12 @@ public class Jelly {
     private List<JellyImage> jellyImages =new ArrayList<>(); //젤리에 들어갈 사진 리스트
 
     @Builder
-    public Jelly(Long jellyId, Long userId, String jellyName, Long firstEmo, Long secondEmo, String content,
+    public Jelly(Long jellyId, Long userId, Long jellyCombId, String jellyName, String content,
                  Boolean isAging, LocalDate agingPeriod, LocalDate createDate, List<JellyImage> jellyImages) {
         this.jellyId = jellyId;
         this.userId = userId;
+        this.jellyCombId = jellyCombId;
         this.jellyName = jellyName;
-        this.firstEmo = firstEmo;
-        this.secondEmo = secondEmo;
         this.content = content;
         this.isAging = isAging;
         this.agingPeriod = agingPeriod;
