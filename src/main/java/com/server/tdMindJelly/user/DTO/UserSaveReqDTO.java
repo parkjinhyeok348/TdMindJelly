@@ -19,14 +19,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UserSaveReqDTO {
-    private String mobilePhoneNumber;
-    private String email;
-    private String password;
-    private String userName;
-    private String nickName;
+    private String mobilePhoneNumber; // 전화번호
+    private String email; // 이메일
+    private String password; // 비밀번호
+    private String userName; // 실명
+    private String nickName; // 닉네임
     private Boolean gender; // 성별
-    private String birthDate;
-    private String profileImage;
+    private String birthDate; // 생일날짜
+    private String profileImage; // 프로필 이미지
     private String ageRange; // 연령대
     private Boolean isMarketing; // 마케팅 정보 수신 동의
 
@@ -50,11 +50,11 @@ public class UserSaveReqDTO {
     /**
      * UserSaveReqDTO를 User 엔티티로 변환하는 메서드
      */
-    public User toEntity() {
+    public User toEntity(String encodePassword) {
         return User.builder()
                 .mobilePhoneNumber(mobilePhoneNumber)
                 .email(email)
-                .password(password)
+                .password(encodePassword)
                 .userName(userName)
                 .nickName(nickName)
                 .gender(gender) // null 방지

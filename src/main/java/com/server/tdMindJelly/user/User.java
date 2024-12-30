@@ -89,11 +89,14 @@ public class User {
         this.agedEmoList = agedEmoList != null ? agedEmoList : new ArrayList<>();
     }
 
-    public void updateUser(String password, String nickName,
+    public void updateUser(String nickName,
                            String profileImage, Boolean isMarketing){
-        this.password = (password != null)? password:this.password;
         this.nickName = (nickName != null)? nickName:this.nickName;
         this.profileImage = (profileImage != null)? profileImage:this.profileImage;
         this.isMarketing = (isMarketing != null)? isMarketing:this.isMarketing;
+    }
+
+    public void updatePassword(String newPassword){
+        this.password = newPassword;
     }
 }

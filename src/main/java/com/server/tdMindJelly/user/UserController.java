@@ -1,9 +1,6 @@
 package com.server.tdMindJelly.user;
 
-import com.server.tdMindJelly.user.DTO.UserResDTO;
-import com.server.tdMindJelly.user.DTO.UserSaveReqDTO;
-import com.server.tdMindJelly.user.DTO.UserUpdateReqDTO;
-import com.server.tdMindJelly.user.DTO.UserUpdateResDTO;
+import com.server.tdMindJelly.user.DTO.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -77,6 +74,16 @@ public class UserController {
     public ResponseEntity<Boolean> checkDuplicateNickName(@RequestParam String nickName) {
         Boolean isNickNameAvailable = userService.checkDuplicateNickName(nickName);
         return ResponseEntity.ok(isNickNameAvailable);
+    }
+
+    // 사용자 이름, 전화번호로 이메일 조회
+
+    // 비밀번호 찾기 (실패시 임시 비밀번호 전송)
+
+    //로그인 (아이디와 비밀번호로 계정 진위 확인)
+    @PostMapping("/login")
+    public String login(@RequestBody UserLoginReqDTO reqDTO) {
+        return userService.login(reqDTO);
     }
 
     // 사용자 삭제

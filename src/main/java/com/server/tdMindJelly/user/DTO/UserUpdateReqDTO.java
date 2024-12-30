@@ -19,14 +19,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UserUpdateReqDTO {
-    private String password;
-    private String nickName;
-    private String profileImage;
-    private Boolean isMarketing;
+    private String nickName; // 닉네임
+    private String profileImage; // 프로필 이미지
+    private Boolean isMarketing; // 마켓팅 정보 수신 동의
 
     @Builder
-    public UserUpdateReqDTO(String password, String nickName, String profileImage, Boolean isMarketing) {
-        this.password = password;
+    public UserUpdateReqDTO( String nickName, String profileImage, Boolean isMarketing) {
         this.nickName = nickName;
         this.profileImage = profileImage;
         this.isMarketing = isMarketing;

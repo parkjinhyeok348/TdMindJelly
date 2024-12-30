@@ -47,8 +47,8 @@ spring: #사용자보안
   mail:
     host: smtp.gmail.com
     port: '587'
-    username: wlsgur348@gmail.com
-    password: qzat cayf lltn uoil
+    username: chococurry116@gmail.com
+    password: hkuq ddlp zmdj fxls
     properties.mail.smtp:
       auth: true
       starttls.enable: true
