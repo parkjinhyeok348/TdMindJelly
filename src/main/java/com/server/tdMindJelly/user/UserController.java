@@ -3,7 +3,9 @@ package com.server.tdMindJelly.user;
 import com.server.tdMindJelly.user.DTO.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -77,13 +79,30 @@ public class UserController {
     }
 
     // 사용자 이름, 전화번호로 이메일 조회
+    @PostMapping("/find-email")
+    public ResponseEntity<String> findEmail(@RequestParam String username, @RequestParam String mobilePhoneNumber) {
+        String email = userService.findEmail(username,mobilePhoneNumber);
+        return ResponseEntity.ok(email);
+    }
 
     // 비밀번호 찾기 (실패시 임시 비밀번호 전송)
+    @PostMapping("/find-password")
+    public ResponseEntity<String> findPassword(@RequestBody FindPasswordReqDTO reqDTO) {
+        try {
+            userService.findPassword(reqDTO);
+            return ResponseEntity.ok("Temporary password has been sent to your email."); // 성공 시 메시지
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found."); // 사용자 없음
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing the request."); // 기타 에러
+        }
+    }
 
     //로그인 (아이디와 비밀번호로 계정 진위 확인)
     @PostMapping("/login")
-    public String login(@RequestBody UserLoginReqDTO reqDTO) {
-        return userService.login(reqDTO);
+    public ResponseEntity<String> login(@RequestBody UserLoginReqDTO reqDTO) {
+        String token = userService.login(reqDTO);
+        return ResponseEntity.ok(token);
     }
 
     // 사용자 삭제

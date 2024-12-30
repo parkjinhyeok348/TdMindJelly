@@ -33,7 +33,7 @@ public class JellyCombController {
     }
 
     // 감정 조합으로 젤리 아이콘 반환
-    @GetMapping("/jellyIcon")
+    @GetMapping("/jelly-icon")
     public ResponseEntity<String> getJellyIcon(
             @RequestParam("firstEmo") Long firstEmo,
             @RequestParam("secondEmo") Long secondEmo,
