@@ -4,11 +4,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
@@ -26,15 +28,22 @@ import java.util.Date;
 @Component
 public class JwtUtil {
     private SecretKey SECRET_KEY;
-
+    private static final String DEFAULT_SECRET_PATH = "config/secret.txt";
     // secret key 불러오기
     @PostConstruct
     public void loadSecretKey() {
         try {
-            String secret = new String(Files.readAllBytes(Paths.get("config/secret.txt")));
-            this.SECRET_KEY = Keys.hmacShaKeyFor(secret.trim().getBytes()); // trim()으로 공백 제거
+            // 절대 경로 확인
+            Path path = Paths.get(DEFAULT_SECRET_PATH);
+            if (!Files.exists(path)) {
+                // 파일이 없으면 리소스 경로로 대체
+                path = Paths.get(new ClassPathResource(DEFAULT_SECRET_PATH).getURI());
+            }
+
+            String secret = Files.readString(path).trim(); // 파일 내용 읽고 공백 제거
+            this.SECRET_KEY = Keys.hmacShaKeyFor(secret.getBytes());
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load secret key from file", e);
+            throw new RuntimeException("Failed to load secret key", e);
         }
     }
 

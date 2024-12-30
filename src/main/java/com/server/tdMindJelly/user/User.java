@@ -63,11 +63,11 @@ public class User {
     private Boolean isMarketing; //마케팅 정보 수신 동의
 
     @JsonIgnore
-    @OneToMany(mappedBy = "jelly", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Jelly> jellyList =new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "agedEmo", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<AgedEmo> agedEmoList =new ArrayList<>();
 
     @Builder
