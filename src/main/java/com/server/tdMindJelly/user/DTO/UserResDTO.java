@@ -2,7 +2,7 @@ package com.server.tdMindJelly.user.DTO;
 
 import com.server.tdMindJelly.agedEmo.AgedEmo;
 import com.server.tdMindJelly.jelly.Jelly;
-import com.server.tdMindJelly.user.User;
+import com.server.tdMindJelly.user.Users;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,20 +39,20 @@ public class UserResDTO {
     private List<AgedEmo> agedEmoList;
 
     @Builder
-    public UserResDTO(User user) {
-        this.userId = user.getUserId();
-        this.mobilePhoneNumber = user.getMobilePhoneNumber();
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.userName = user.getUserName();
-        this.nickName = user.getNickName();
-        this.gender = user.getGender();
-        this.birthDate = user.getBirthDate();
-        this.profileImage = user.getProfileImage();
-        this.point = user.getPoint();
-        this.ageRange = user.getAgeRange();
-        this.isMarketing = user.getIsMarketing();
-        this.jellyList = user.getJellyList();
-        this.agedEmoList = user.getAgedEmoList();
+    public UserResDTO(Users users) {
+        this.userId = users.getUserId();
+        this.mobilePhoneNumber = users.getMobilePhoneNumber();
+        this.email = users.getEmail();
+        this.password = users.getPassword();
+        this.userName = users.getUserName();
+        this.nickName = users.getNickName();
+        this.gender = users.getGender();
+        this.birthDate = users.getBirthDate();
+        this.profileImage = users.getProfileImage();
+        this.point = users.getPoint();
+        this.ageRange = users.getAgeRange();
+        this.isMarketing = users.getIsMarketing();
+        this.jellyList = users.getJellyList();
+        this.agedEmoList = users.getAgedEmoList();
     }
 }

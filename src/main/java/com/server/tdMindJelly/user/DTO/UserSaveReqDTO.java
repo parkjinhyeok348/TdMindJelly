@@ -1,6 +1,6 @@
 package com.server.tdMindJelly.user.DTO;
 
-import com.server.tdMindJelly.user.User;
+import com.server.tdMindJelly.user.Users;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,8 +50,8 @@ public class UserSaveReqDTO {
     /**
      * UserSaveReqDTO를 User 엔티티로 변환하는 메서드
      */
-    public User toEntity(String encodePassword) {
-        return User.builder()
+    public Users toEntity(String encodePassword) {
+        return Users.builder()
                 .mobilePhoneNumber(mobilePhoneNumber)
                 .email(email)
                 .password(encodePassword)

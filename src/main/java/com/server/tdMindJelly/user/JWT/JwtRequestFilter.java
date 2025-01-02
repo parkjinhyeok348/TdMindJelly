@@ -1,6 +1,6 @@
 package com.server.tdMindJelly.user.JWT;
 
-import com.server.tdMindJelly.user.User;
+import com.server.tdMindJelly.user.Users;
 import com.server.tdMindJelly.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -51,7 +51,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         // 사용자 인증 처리
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            Optional<User> userOptional = userRepository.findByEmail(email);
+            Optional<Users> userOptional = userRepository.findByEmail(email);
             if (userOptional.isPresent() && jwtUtil.isTokenValid(jwt, userOptional.get().getEmail())) {
                 UserDetails userDetails = new CustomUserDetails(userOptional.get());
                 UsernamePasswordAuthenticationToken authenticationToken =

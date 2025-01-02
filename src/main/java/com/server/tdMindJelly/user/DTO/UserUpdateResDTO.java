@@ -18,13 +18,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UserUpdateResDTO {
-    private String password; // 전화번호
     private String nickName; // 닉네임
     private String profileImage; // 프로필 이미지
     private Boolean isMarketing; // 마켓팅 정보 수신 동의
     @Builder
-    public UserUpdateResDTO(String password, String nickName, String profileImage, Boolean isMarketing) {
-        this.password = password;
+    public UserUpdateResDTO(String nickName, String profileImage, Boolean isMarketing) {
         this.nickName = nickName;
         this.profileImage = profileImage;
         this.isMarketing = isMarketing;

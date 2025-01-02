@@ -11,7 +11,7 @@ package com.server.tdMindJelly.user.JWT;
  * @modification : 2024-12-30 (Jinhyeok)
  * @date : 2024-12-30
  */
-import com.server.tdMindJelly.user.User;
+import com.server.tdMindJelly.user.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,10 +20,10 @@ import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
-    private final User user;
+    private final Users users;
 
-    public CustomUserDetails(User user) {
-        this.user = user;
+    public CustomUserDetails(Users users) {
+        this.users = users;
     }
 
     @Override
@@ -33,12 +33,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return users.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail(); // UserName 대신 Email 반환
+        return users.getEmail(); // UserName 대신 Email 반환
     }
 
     @Override

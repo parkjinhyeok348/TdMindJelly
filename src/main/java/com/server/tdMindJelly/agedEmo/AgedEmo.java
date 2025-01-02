@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tdMindJelly.AgedEmoImage.AgedEmoImage;
 import com.server.tdMindJelly.JellyCombination.JellyCombination;
-import com.server.tdMindJelly.user.User;
+import com.server.tdMindJelly.user.Users;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,7 +38,7 @@ public class AgedEmo {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable=false)
-    private User user;
+    private Users users;
 
     @Column(nullable = false)
     private Long userId;

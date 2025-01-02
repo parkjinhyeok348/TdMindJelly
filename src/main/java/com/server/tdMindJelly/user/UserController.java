@@ -29,9 +29,9 @@ public class UserController {
 
     // 새로운 유저 생성
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserSaveReqDTO userSaveReqDTO) {
-        User createdUser = userService.createUser(userSaveReqDTO);
-        return ResponseEntity.ok(createdUser);
+    public ResponseEntity<Users> createUser(@RequestBody UserSaveReqDTO userSaveReqDTO) {
+        Users createdUsers = userService.createUser(userSaveReqDTO);
+        return ResponseEntity.ok(createdUsers);
     }
 
     // 유저 정보 업데이트를 위한 프로필 정보 출력
@@ -43,11 +43,11 @@ public class UserController {
 
     // 유저 정보 업데이트
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(
+    public ResponseEntity<Users> updateUser(
             @PathVariable Long userId,
             @RequestBody UserUpdateReqDTO reqDTO) {
-        User updatedUser = userService.updateUser(userId, reqDTO);
-        return ResponseEntity.ok(updatedUser);
+        Users updatedUsers = userService.updateUser(userId, reqDTO);
+        return ResponseEntity.ok(updatedUsers);
     }
 
     // 사용자 아이디로 유저 상세 정보 출력

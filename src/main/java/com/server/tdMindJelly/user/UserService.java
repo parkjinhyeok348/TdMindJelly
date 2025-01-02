@@ -42,61 +42,61 @@ public class UserService {
     private final JavaMailSender mailSender;
 
     //새로운 유저 생성
-    public User createUser(UserSaveReqDTO userSaveReqDTO){
+    public Users createUser(UserSaveReqDTO userSaveReqDTO){
         String encodedPassword = passwordEncryptService.encodePassword(userSaveReqDTO.getPassword()); // 비밀번호 암호화
-        User user = userSaveReqDTO.toEntity(encodedPassword);
-        return userRepository.save(user);
+        Users users = userSaveReqDTO.toEntity(encodedPassword);
+        return userRepository.save(users);
     }
     
     //유저 정보 업데이트를 위한 프로필 정보 출력
     public UserUpdateResDTO getUserProfile(Long userId){
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        return new UserUpdateResDTO(user.getPassword(), user.getNickName(), user.getProfileImage(),user.getIsMarketing());
+        Users users = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return new UserUpdateResDTO(users.getNickName(), users.getProfileImage(), users.getIsMarketing());
     }
 
     // 유저 정보 업데이트
-    public User updateUser(Long userId, UserUpdateReqDTO reqDTO){
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        user.updateUser(reqDTO.getNickName(),reqDTO.getProfileImage(),reqDTO.getIsMarketing());
-        return user;
+    public Users updateUser(Long userId, UserUpdateReqDTO reqDTO){
+        Users users = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        users.updateUser(reqDTO.getNickName(),reqDTO.getProfileImage(),reqDTO.getIsMarketing());
+        return users;
     }
 
     // 사용자 아이디로 유저 상세정보 출력
     public UserResDTO getUserById(Long userId){
-        User entity = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Users entity = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         return new UserResDTO(entity);
     }
 
     // 이메일 중복 여부 확인
     public Boolean checkDuplicateEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        return user == null;
+        Users users = userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return users == null;
     }
 
     // 전화번호 중복 여부 확인
     public Boolean checkDuplicateMobilePhoneNumber(String mobilePhoneNumber) {
-        User user = userRepository.findByMobilePhoneNumber(mobilePhoneNumber).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        return user == null;
+        Users users = userRepository.findByMobilePhoneNumber(mobilePhoneNumber).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return users == null;
     }
 
     //닉네임 중복 여부 확인
     public Boolean checkDuplicateNickName(String nickName) {
-        User user = userRepository.findByNickName(nickName);
-        return user == null;
+        Users users = userRepository.findByNickName(nickName);
+        return users == null;
     }
     
     // 유저 계정 삭제
     public void deleteUser(Long userId){
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Users users = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         userRepository.deleteById(userId);
     }
 
     // 로그인
     public String login(UserLoginReqDTO reqDTO) {
-        User user = userRepository.findByEmail(reqDTO.getEmail())
+        Users users = userRepository.findByEmail(reqDTO.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        if (!passwordEncryptService.matchesPassword(reqDTO.getPassword(), user.getPassword())) {
+        if (!passwordEncryptService.matchesPassword(reqDTO.getPassword(), users.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
 
@@ -105,23 +105,23 @@ public class UserService {
 
     // 비밀번호 찾기
     public void findPassword(FindPasswordReqDTO reqDTO) {
-        User user = userRepository.findByUserNameAndEmailAndMobilePhoneNumber(reqDTO.getUserName(), reqDTO.getEmail(), reqDTO.getMobilePhoneNumber())
+        Users users = userRepository.findByUserNameAndEmailAndMobilePhoneNumber(reqDTO.getUserName(), reqDTO.getEmail(), reqDTO.getMobilePhoneNumber())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         String tmpPassword = RandomStringUtils.random(8, 0, 0, true, true, null, secureRandom);
 
         String encodedPassword = passwordEncryptService.encodePassword(tmpPassword);
-        user.updatePassword(encodedPassword);
-        userRepository.save(user);
+        users.updatePassword(encodedPassword);
+        userRepository.save(users);
         sendMail(reqDTO.getEmail(), tmpPassword);
     }
 
     // 이메일 찾기
     public String findEmail(String username, String mobilePhoneNumber) {
-        User user = userRepository.findByUserNameAndMobilePhoneNumber(username,mobilePhoneNumber)
+        Users users = userRepository.findByUserNameAndMobilePhoneNumber(username,mobilePhoneNumber)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return user.getEmail(); // 이메일 반환
+        return users.getEmail(); // 이메일 반환
     }
 
     // 임시 비밀번호 메일 전송

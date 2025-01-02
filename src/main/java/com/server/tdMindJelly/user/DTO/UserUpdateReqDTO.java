@@ -1,6 +1,5 @@
 package com.server.tdMindJelly.user.DTO;
 
-import com.server.tdMindJelly.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
