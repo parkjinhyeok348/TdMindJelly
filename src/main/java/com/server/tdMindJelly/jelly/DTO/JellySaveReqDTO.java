@@ -23,12 +23,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class JellySaveReqDTO {
-    private String jellyName; //젤리 이름
+    private Long userId; // 사용자 id
     private Long jellyCombId; // 젤리 조합 id
+    private String jellyName; //젤리 이름
     private String content; // 젤리에 남길 메모
     private LocalDate agingPeriod; // 숙성 기간
     private LocalDate createDate; // 생성 날짜
-    private Long userId; // 사용자 id
     private List<JellyImage> jellyImages; // 젤리에 들어갈 사진 리스트
 
     @Builder
