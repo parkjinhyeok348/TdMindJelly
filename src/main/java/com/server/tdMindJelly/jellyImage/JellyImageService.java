@@ -1,8 +1,5 @@
 package com.server.tdMindJelly.jellyImage;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.server.tdMindJelly.jelly.DTO.JellyDrawerResDTO;
-import com.server.tdMindJelly.jelly.DTO.JellyResDTO;
 import com.server.tdMindJelly.jellyImage.DTO.JellyImageResDTO;
 import com.server.tdMindJelly.jellyImage.DTO.JellyImageSaveReqDTO;
 import jakarta.transaction.Transactional;
@@ -34,7 +31,6 @@ public class JellyImageService {
 
     private static String bucketName = "mind-jelly-bucket";
 
-    private final AmazonS3Client amazonS3Client;
     private final JellyImageRepository jellyImageRepository;
 
     //젤리 이미지 생성
