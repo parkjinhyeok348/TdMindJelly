@@ -1,6 +1,7 @@
 package com.server.tdMindJelly.agedEmo;
 
 import com.server.tdMindJelly.agedEmo.DTO.*;
+import com.server.tdMindJelly.user.JWT.AuthenticatedUserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +30,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AgedEmoService {
 
-    private AgedEmoRepository agedEmoRepository;
+    private final AgedEmoRepository agedEmoRepository;
+    private final AuthenticatedUserService authenticatedUserService;
 
     //숙성된 감정 생성
     public AgedEmo createAgedEmo(AgedEmoSaveReqDTO agedEmoSaveReqDTO){
+        authenticatedUserService.assertCurrentUser(agedEmoSaveReqDTO.getUserId());
         AgedEmo agedEmo = agedEmoSaveReqDTO.toEntity();
         return agedEmoRepository.save(agedEmo);
     }
@@ -40,12 +43,14 @@ public class AgedEmoService {
     // 숙성된 감정 업데이트를 위한 상세 정보 출력
     public AgedEmoUpdateResDTO getAgedEmoInfo(Long agedEmoId){
         AgedEmo agedEmo = agedEmoRepository.findById(agedEmoId).orElseThrow(() -> new EntityNotFoundException("AgedEmo not found"));
+        authenticatedUserService.assertCurrentUser(agedEmo.getUserId());
         return new AgedEmoUpdateResDTO(agedEmo.getAgedEmoName(),agedEmo.getContent(),agedEmo.getAgedEmoImages());
     }
 
     // 숙성된 감정 업데이트
     public AgedEmo updateAgedEmo(Long agedEmoId, AgedEmoUpdateReqDTO reqDTO){
         AgedEmo agedEmo = agedEmoRepository.findById(agedEmoId).orElseThrow(() -> new EntityNotFoundException("AgedEmo not found"));
+        authenticatedUserService.assertCurrentUser(agedEmo.getUserId());
         agedEmo.updateAgedEmo(reqDTO.getAgedEmoName(),reqDTO.getContent(),reqDTO.getAgedEmoImages());
         return agedEmo;
     }
@@ -53,11 +58,13 @@ public class AgedEmoService {
     // 숙성된 감정 상세 정보 출력
     public AgedEmoResDTO getAgedEmoById(Long agedEmoId){
         AgedEmo entity = agedEmoRepository.findById(agedEmoId).orElseThrow(() -> new EntityNotFoundException("AgedEmo not found"));
+        authenticatedUserService.assertCurrentUser(entity.getUserId());
         return new AgedEmoResDTO(entity);
     }
 
     // 젤리 뮤지엄에 개인 숙성된 감정 목록 출력
     public List<AgedEmoMuseumResDTO> getAgedEmoList(Long userId){
+        authenticatedUserService.assertCurrentUser(userId);
         return Optional.ofNullable(agedEmoRepository.findByUserId(userId))
                 .orElse(Collections.emptyList())
                 .stream()

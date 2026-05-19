@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import com.server.tdMindJelly.jellyImage.DTO.JellyImageResDTO;
+import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class JellyResDTO {
     private Boolean isAging; // 숙성 여부
     private LocalDate agingPeriod; // 숙성 기간
     private LocalDate createDate; // 생성 날짜
-    private List<JellyImage> jellyImages; //젤리에 들어갈 사진 리스트
+    private List<JellyImageResDTO> jellyImages; //젤리에 들어갈 사진 리스트
 
     @Builder
     public JellyResDTO(Jelly jelly) {
@@ -43,6 +45,9 @@ public class JellyResDTO {
         this.isAging = jelly.getIsAging();
         this.agingPeriod = jelly.getAgingPeriod();
         this.createDate = jelly.getCreateDate();
-        this.jellyImages = jelly.getJellyImages();
+        // Entity 리스트를 DTO 리스트로 변환하여 경로 자동 추가 적용
+        this.jellyImages = jelly.getJellyImages().stream()
+                .map(JellyImageResDTO::new)
+                .collect(Collectors.toList());
     }
 }

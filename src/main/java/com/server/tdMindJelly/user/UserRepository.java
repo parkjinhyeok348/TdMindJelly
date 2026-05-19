@@ -31,4 +31,13 @@ public interface UserRepository extends JpaRepository<Users,Long> {
 
     // 중복 닉네임이 있는지 조회
     Users findByNickName(@Param("nickName") String nickName);
+
+    // 이메일 존재 여부 확인 (중복 체크용)
+    boolean existsByEmail(String email);
+
+    // 전화번호 존재 여부 확인 (중복 체크용)
+    boolean existsByMobilePhoneNumber(String mobilePhoneNumber);
+
+    // 닉네임 존재 여부 확인 (중복 체크용)
+    boolean existsByNickName(String nickName);
 }

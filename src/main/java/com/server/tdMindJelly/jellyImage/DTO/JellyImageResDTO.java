@@ -27,6 +27,7 @@ public class JellyImageResDTO {
     public JellyImageResDTO(JellyImage jellyImage){
         this.jellyImageListId = jellyImage.getJellyImageListId();
         this.jellyId = jellyImage.getJellyId();
-        this.imageName = jellyImage.getImageName();
+        // 클라이언트 접근을 위한 경로 추가
+        this.imageName = "/images/" + jellyImage.getImageName();
     }
 }

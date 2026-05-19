@@ -1,14 +1,7 @@
 package com.server.tdMindJelly.user;
 
-import com.server.tdMindJelly.user.DTO.*;
-import com.server.tdMindJelly.user.JWT.JwtUtil;
-import com.server.tdMindJelly.user.JWT.PasswordEncryptService;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.security.SecureRandom;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -16,7 +9,22 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
+import com.server.tdMindJelly.user.DTO.FindPasswordReqDTO;
+import com.server.tdMindJelly.user.DTO.UserLoginReqDTO;
+import com.server.tdMindJelly.user.DTO.UserResDTO;
+import com.server.tdMindJelly.user.DTO.UserSaveReqDTO;
+import com.server.tdMindJelly.user.DTO.UserUpdateReqDTO;
+import com.server.tdMindJelly.user.DTO.UserUpdateResDTO;
+import com.server.tdMindJelly.user.JWT.AuthenticatedUserService;
+import com.server.tdMindJelly.user.JWT.JwtUtil;
+import com.server.tdMindJelly.user.JWT.PasswordEncryptService;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author : Jinhyeok
@@ -35,11 +43,12 @@ import java.security.SecureRandom;
 @RequiredArgsConstructor
 public class UserService {
 
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final PasswordEncryptService passwordEncryptService;
     private static final SecureRandom secureRandom = new SecureRandom();
     private final JavaMailSender mailSender;
+    private final AuthenticatedUserService authenticatedUserService;
 
     //새로운 유저 생성
     public Users createUser(UserSaveReqDTO userSaveReqDTO){
@@ -50,12 +59,14 @@ public class UserService {
     
     //유저 정보 업데이트를 위한 프로필 정보 출력
     public UserUpdateResDTO getUserProfile(Long userId){
+        authenticatedUserService.assertCurrentUser(userId);
         Users users = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         return new UserUpdateResDTO(users.getNickName(), users.getProfileImage(), users.getIsMarketing());
     }
 
     // 유저 정보 업데이트
     public Users updateUser(Long userId, UserUpdateReqDTO reqDTO){
+        authenticatedUserService.assertCurrentUser(userId);
         Users users = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         users.updateUser(reqDTO.getNickName(),reqDTO.getProfileImage(),reqDTO.getIsMarketing());
         return users;
@@ -63,30 +74,29 @@ public class UserService {
 
     // 사용자 아이디로 유저 상세정보 출력
     public UserResDTO getUserById(Long userId){
+        authenticatedUserService.assertCurrentUser(userId);
         Users entity = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         return new UserResDTO(entity);
     }
 
-    // 이메일 중복 여부 확인
+    // 이메일 중복 여부 확인 (true = 사용 가능, false = 이미 사용 중)
     public Boolean checkDuplicateEmail(String email) {
-        Users users = userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        return users == null;
+        return !userRepository.existsByEmail(email);
     }
 
-    // 전화번호 중복 여부 확인
+    // 전화번호 중복 여부 확인 (true = 사용 가능, false = 이미 사용 중)
     public Boolean checkDuplicateMobilePhoneNumber(String mobilePhoneNumber) {
-        Users users = userRepository.findByMobilePhoneNumber(mobilePhoneNumber).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        return users == null;
+        return !userRepository.existsByMobilePhoneNumber(mobilePhoneNumber);
     }
 
     //닉네임 중복 여부 확인
     public Boolean checkDuplicateNickName(String nickName) {
-        Users users = userRepository.findByNickName(nickName);
-        return users == null;
+        return !userRepository.existsByNickName(nickName);
     }
     
     // 유저 계정 삭제
     public void deleteUser(Long userId){
+        authenticatedUserService.assertCurrentUser(userId);
         Users users = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         userRepository.deleteById(userId);
     }
@@ -100,7 +110,7 @@ public class UserService {
             throw new BadCredentialsException("Invalid password");
         }
 
-        return jwtUtil.generateToken(reqDTO.getEmail()); // JWT 생성
+        return jwtUtil.generateToken(reqDTO.getEmail(), users.getUserId()); // JWT 생성
     }
 
     // 비밀번호 찾기
