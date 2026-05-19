@@ -25,6 +25,7 @@ public class BasicEmoResDTO {
     public BasicEmoResDTO(BasicEmo basicEmo){
         this.emoId = basicEmo.getEmoId();
         this.emoName = basicEmo.getEmoName();
-        this.emoIcon=basicEmo.getEmoIcon();
+        // 안드로이드 등 클라이언트에서 바로 접근 가능하도록 경로 추가
+        this.emoIcon = "/icons/" + basicEmo.getEmoIcon();
     }
 }

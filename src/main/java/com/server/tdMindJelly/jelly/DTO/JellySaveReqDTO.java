@@ -1,13 +1,11 @@
 package com.server.tdMindJelly.jelly.DTO;
 
 import com.server.tdMindJelly.jelly.Jelly;
-import com.server.tdMindJelly.jellyImage.JellyImage;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * @author : Jinhyeok
@@ -29,18 +27,16 @@ public class JellySaveReqDTO {
     private String content; // 젤리에 남길 메모
     private LocalDate agingPeriod; // 숙성 기간
     private LocalDate createDate; // 생성 날짜
-    private List<JellyImage> jellyImages; // 젤리에 들어갈 사진 리스트
 
     @Builder
     public JellySaveReqDTO(String jellyName, Long jellyCombId, String content, LocalDate agingPeriod,
-                           LocalDate createDate,Long userId,List<JellyImage> jellyImages) {
+                           LocalDate createDate, Long userId) {
         this.jellyName = jellyName;
         this.jellyCombId = jellyCombId;
         this.content = content;
         this.agingPeriod = agingPeriod;
         this.createDate = createDate;
         this.userId = userId;
-        this.jellyImages = jellyImages;
     }
 
     public Jelly toEntity() {
@@ -49,10 +45,9 @@ public class JellySaveReqDTO {
                 .jellyCombId(jellyCombId)
                 .content(content)
                 .agingPeriod(agingPeriod)
-                .createDate(this.createDate != null ? this.createDate : LocalDate.now()) // createDate가 null인 경우 현재 날짜로 설정
+                .createDate(this.createDate != null ? this.createDate : LocalDate.now())
                 .isAging(false)
                 .userId(userId)
-                .jellyImages(jellyImages)
                 .build();
     }
 

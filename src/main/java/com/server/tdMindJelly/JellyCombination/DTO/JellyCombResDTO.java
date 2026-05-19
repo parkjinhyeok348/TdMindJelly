@@ -31,6 +31,6 @@ public class JellyCombResDTO {
         this.firstEmo = jellyCombination.getFirstEmo();
         this.secondEmo = jellyCombination.getSecondEmo();
         this.isAwaken = jellyCombination.getIsAwaken();
-        this.jellyIcon = jellyCombination.getJellyIcon();
+        this.jellyIcon = "/images/" + jellyCombination.getJellyIcon();
     }
 }

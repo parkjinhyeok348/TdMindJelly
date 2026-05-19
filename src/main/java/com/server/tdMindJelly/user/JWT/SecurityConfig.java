@@ -2,15 +2,19 @@ package com.server.tdMindJelly.user.JWT;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -28,17 +32,56 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private static final String[] PUBLIC_STATIC_RESOURCES = {
+            "/images/**", "/icons/**"
+    };
+
+    private static final String[] DEV_ONLY_RESOURCES = {
+            "/h2-console/**"
+    };
+
+    private static final String[] PUBLIC_GET_ENDPOINTS = {
+            "/users/check-email", "/users/check-phone", "/users/check-nickname",
+            "/basicEmo", "/basicEmo/**",
+            "/jellyComb", "/jellyComb/**"
+    };
+
+    private static final String[] PUBLIC_POST_ENDPOINTS = {
+            "/users", "/users/login", "/users/find-email", "/users/find-password"
+    };
+
+    private final JwtRequestFilter jwtRequestFilter;
+    private final Environment environment;
+
+    public SecurityConfig(JwtRequestFilter jwtRequestFilter, Environment environment) {
+        this.jwtRequestFilter = jwtRequestFilter;
+        this.environment = environment;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화 (필요에 따라 조정)
-                .authorizeHttpRequests(authorizeRequests ->
+                .cors(withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorizeRequests -> {
                         authorizeRequests
-                                .requestMatchers(HttpMethod.GET, "/public/**").permitAll() // 공개 API에 접근 허용
-                                .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자만 접근 허용
-                                .anyRequest().authenticated() // 나머지 요청은 인증 필요
-                )
-                .formLogin(withDefaults());
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
+                                .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
+                                .requestMatchers(PUBLIC_STATIC_RESOURCES).permitAll();
+
+                        if (environment.acceptsProfiles(Profiles.of("local"))) {
+                            authorizeRequests.requestMatchers(DEV_ONLY_RESOURCES).permitAll();
+                        }
+
+                        authorizeRequests.anyRequest().authenticated();
+                })
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
 
         return http.build();
     }

@@ -1,13 +1,24 @@
 package com.server.tdMindJelly.jelly;
 
-import com.server.tdMindJelly.jelly.DTO.*;
-import lombok.NoArgsConstructor;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.server.tdMindJelly.jelly.DTO.JellyDrawerResDTO;
+import com.server.tdMindJelly.jelly.DTO.JellyResDTO;
+import com.server.tdMindJelly.jelly.DTO.JellySaveReqDTO;
+import com.server.tdMindJelly.jelly.DTO.JellyUpdateReqDTO;
+import com.server.tdMindJelly.jelly.DTO.JellyUpdateResDTO;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author : Jinhyeok
@@ -28,7 +39,7 @@ public class JellyController {
 
     private final JellyService jellyService;
 
-    // 젤리 생성
+    // 젤리 생성 (이미지는 POST /jellyImage 로 별도 처리)
     @PostMapping
     public ResponseEntity<Jelly> createJelly(@RequestBody JellySaveReqDTO jellySaveReqDTO) {
         Jelly createdJelly = jellyService.createJelly(jellySaveReqDTO);

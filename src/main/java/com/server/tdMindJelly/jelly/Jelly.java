@@ -84,7 +84,7 @@ public class Jelly {
         this.isAging = isAging;
         this.agingPeriod = agingPeriod;
         this.createDate = createDate;
-        this.jellyImages=jellyImages;
+        this.jellyImages = jellyImages != null ? jellyImages : new ArrayList<>();
     }
 
     public void updateJelly(String jellyName, String content,

@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class JellyCombService {
 
-    private JellyCombRepository jellyCombRepository;
+    private final JellyCombRepository jellyCombRepository;
 
     //젤리 조합 정보 조회
     public JellyCombResDTO getJellyCombById(Long jellyCombId){
@@ -34,8 +34,11 @@ public class JellyCombService {
 
     // 감정 조합으로 젤리 아이콘 반환
     public String getJellyIcon(Long firstEmo, Long secondEmo, Boolean isAwaken){
-        JellyCombination jellyCombination = jellyCombRepository.findByFirstEmoAndSecondEmoAndIsAwaken(firstEmo,secondEmo,isAwaken);
-        return jellyCombination.getJellyIcon();
+        String jellyIconName = jellyCombRepository.findJellyIconByCombination(firstEmo, secondEmo, isAwaken);
+        if (jellyIconName == null) {
+            throw new EntityNotFoundException("JellyIcon not found for given combination");
+        }
+        return "/images/" + jellyIconName;
     }
 
 }

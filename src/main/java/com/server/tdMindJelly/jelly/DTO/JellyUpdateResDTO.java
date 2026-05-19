@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import com.server.tdMindJelly.jellyImage.DTO.JellyImageResDTO;
+import java.util.stream.Collectors;
 import java.util.List;
 
 /**
@@ -23,12 +25,14 @@ import java.util.List;
 public class JellyUpdateResDTO {
     private String jellyName; //젤리 이름
     private String content; // 젤리에 남길 메모
-    private List<JellyImage> jellyImages; //젤리에 들어갈 사진 리스트
+    private List<JellyImageResDTO> jellyImages; //젤리에 들어갈 사진 리스트
 
     @Builder
     public JellyUpdateResDTO(String jellyName, String content, List<JellyImage> jellyImages){
         this.jellyName = jellyName;
         this.content = content;
-        this.jellyImages = jellyImages;
+        this.jellyImages = jellyImages.stream()
+                .map(JellyImageResDTO::new)
+                .collect(Collectors.toList());
     }
 }
