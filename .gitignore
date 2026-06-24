@@ -145,3 +145,21 @@ replay_pid*
 
 # Local docker env
 .env
+
+# Build / Gradle (regenerated)
+.gradle/
+build/
+
+# IDE / tooling
+.idea/
+.vscode/
+.omc/
+local.properties
+
+# Local-only Spring configs (contain secrets, kept out of git)
+application.yml
+application-proddb.yml
+
+# Superpowers scratch (specs, plans, SDD state) — never committed
+docs/superpowers/
+.superpowers/
