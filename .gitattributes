@@ -1,0 +1,6 @@
+# Gradle wrapper / shell scripts must use LF so they run in Linux containers
+# (e.g. the alpine build stage in Dockerfile). Without this, a Windows
+# checkout produces CRLF and `/bin/sh\r` fails inside the container.
+gradlew text eol=lf
+*.sh text eol=lf
+gradlew.bat text eol=crlf
