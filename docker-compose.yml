@@ -8,6 +8,8 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
+      # 호스트 3307 -> 컨테이너 3306. 로컬 MySQL이 3306을 점유한 경우 충돌 방지용.
+      # 컨테이너 내부 통신(app -> db:3306)은 영향 없음.
       - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
