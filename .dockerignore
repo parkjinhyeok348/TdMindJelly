@@ -1,0 +1,16 @@
+# Build / IDE / VCS artifacts — keep build context small
+.git
+.gitignore
+.gradle
+.idea
+.vscode
+.omc
+build
+out
+*.iml
+docs
+local.properties
+# secrets / local env
+.env
+HELP.md
+README.md
