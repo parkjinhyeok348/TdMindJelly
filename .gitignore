@@ -163,3 +163,10 @@ application-proddb.yml
 # Superpowers scratch (specs, plans, SDD state) — never committed
 docs/superpowers/
 .superpowers/
+
+# Docker — 개인 로컬 실행 설정 (git 추적 제외)
+Dockerfile
+docker-compose.yml
+.dockerignore
+.env.example
+src/main/resources/application-dockerdb.yml
