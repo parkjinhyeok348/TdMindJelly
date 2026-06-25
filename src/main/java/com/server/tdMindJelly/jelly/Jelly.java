@@ -55,6 +55,9 @@ public class Jelly {
     private String jellyName; //젤리 이름
 
     @Column
+    private String title; // 일기 제목
+
+    @Column
     private String content; // 젤리에 남길 메모
 
     @Column
@@ -75,11 +78,12 @@ public class Jelly {
     private List<JellyImage> jellyImages =new ArrayList<>(); //젤리에 들어갈 사진 리스트
 
     @Builder
-    public Jelly(Long userId, Long jellyCombId, String jellyName, String content,
+    public Jelly(Long userId, Long jellyCombId, String jellyName, String title, String content,
                  Boolean isAging, LocalDate agingPeriod, LocalDate createDate, List<JellyImage> jellyImages) {
         this.userId = userId;
         this.jellyCombId = jellyCombId;
         this.jellyName = jellyName;
+        this.title = title;
         this.content = content;
         this.isAging = isAging;
         this.agingPeriod = agingPeriod;

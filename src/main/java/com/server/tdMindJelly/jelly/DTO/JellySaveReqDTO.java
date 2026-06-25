@@ -24,14 +24,16 @@ public class JellySaveReqDTO {
     private Long userId; // 사용자 id
     private Long jellyCombId; // 젤리 조합 id
     private String jellyName; //젤리 이름
+    private String title; // 일기 제목
     private String content; // 젤리에 남길 메모
     private LocalDate agingPeriod; // 숙성 기간
     private LocalDate createDate; // 생성 날짜
 
     @Builder
-    public JellySaveReqDTO(String jellyName, Long jellyCombId, String content, LocalDate agingPeriod,
+    public JellySaveReqDTO(String jellyName, String title, Long jellyCombId, String content, LocalDate agingPeriod,
                            LocalDate createDate, Long userId) {
         this.jellyName = jellyName;
+        this.title = title;
         this.jellyCombId = jellyCombId;
         this.content = content;
         this.agingPeriod = agingPeriod;
@@ -42,6 +44,7 @@ public class JellySaveReqDTO {
     public Jelly toEntity() {
         return Jelly.builder()
                 .jellyName(jellyName)
+                .title(title)
                 .jellyCombId(jellyCombId)
                 .content(content)
                 .agingPeriod(agingPeriod)

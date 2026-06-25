@@ -29,6 +29,7 @@ public class JellyResDTO {
     private Long userId; // 유저 아이디
     private Long jellyCombId; // 젤리 조합 id
     private String jellyName; //젤리 이름
+    private String title; // 일기 제목
     private String content; // 젤리에 남길 메모
     private Boolean isAging; // 숙성 여부
     private LocalDate agingPeriod; // 숙성 기간
@@ -41,6 +42,7 @@ public class JellyResDTO {
         this.userId = jelly.getUserId();
         this.jellyCombId = jelly.getJellyCombId();
         this.jellyName = jelly.getJellyName();
+        this.title = jelly.getTitle();
         this.content = jelly.getContent();
         this.isAging = jelly.getIsAging();
         this.agingPeriod = jelly.getAgingPeriod();

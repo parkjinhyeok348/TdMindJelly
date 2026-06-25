@@ -170,3 +170,9 @@ docker-compose.yml
 .dockerignore
 .env.example
 src/main/resources/application-dockerdb.yml
+
+# 감정 아이콘 / 젤리 이미지 — 로컬 전용, 추적 제외 (폴더는 .gitkeep으로 유지)
+emoIcons/*
+!emoIcons/.gitkeep
+jellyImages/*
+!jellyImages/.gitkeep
