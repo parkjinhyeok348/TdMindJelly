@@ -1,5 +1,6 @@
 package com.server.tdMindJelly.jelly;
 
+import com.server.tdMindJelly.JellyCombination.JellyCombination;
 import com.server.tdMindJelly.jelly.DTO.*;
 import com.server.tdMindJelly.user.JWT.AuthenticatedUserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -68,7 +69,14 @@ public class JellyService {
         return Optional.ofNullable(jellyRepository.findByUserId(userId))
                 .orElse(Collections.emptyList())
                 .stream()
-                .map(JellyDrawerResDTO::new) // 각 젤리를 ResDTO로 변환
+                .map(jelly -> {
+                    // 조합의 젤리 이미지를 채운다 (생성 시 뜨는 조합 이미지와 동일)
+                    JellyCombination comb = jelly.getJellyCombination();
+                    String jellyIcon = (comb != null && comb.getJellyIcon() != null)
+                            ? "/images/" + comb.getJellyIcon()
+                            : null;
+                    return new JellyDrawerResDTO(jelly, jellyIcon);
+                })
                 .collect(Collectors.toList());
     }
 }

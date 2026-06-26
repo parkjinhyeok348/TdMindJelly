@@ -25,6 +25,7 @@ public class JellyDrawerResDTO {
     private Long jellyCombId; // 젤리 조합 id
     private Boolean isAging; // 숙성 여부
     private LocalDate createDate; // 생성 날짜
+    private String jellyIcon; // 조합 젤리 이미지 경로 (/images/파일명)
 
     @Builder
     public JellyDrawerResDTO(Jelly jelly){
@@ -32,5 +33,14 @@ public class JellyDrawerResDTO {
         this.jellyCombId = jelly.getJellyCombId();
         this.isAging = jelly.getIsAging();
         this.createDate = jelly.getCreateDate();
+    }
+
+    // 조합 젤리 이미지까지 채워 서랍에 표시 (DRAW-02)
+    public JellyDrawerResDTO(Jelly jelly, String jellyIcon){
+        this.jellyId = jelly.getJellyId();
+        this.jellyCombId = jelly.getJellyCombId();
+        this.isAging = jelly.getIsAging();
+        this.createDate = jelly.getCreateDate();
+        this.jellyIcon = jellyIcon;
     }
 }
