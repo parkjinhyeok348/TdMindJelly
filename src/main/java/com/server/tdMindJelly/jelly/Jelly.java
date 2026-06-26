@@ -91,6 +91,11 @@ public class Jelly {
         this.jellyImages = jellyImages != null ? jellyImages : new ArrayList<>();
     }
 
+    // 숙성 시작 — isAging 플래그를 켠다 (에이징룸으로 이동, 서랍에서 제외)
+    public void startAging(){
+        this.isAging = true;
+    }
+
     public void updateJelly(String jellyName, String content,
                            List<JellyImage> jellyImages){
         this.jellyName = (jellyName != null && !jellyName.isBlank())? jellyName:this.jellyName;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.server.tdMindJelly.jelly.DTO.JellyDrawerResDTO;
 import com.server.tdMindJelly.jelly.DTO.JellyResDTO;
 import com.server.tdMindJelly.jelly.DTO.JellySaveReqDTO;
+import com.server.tdMindJelly.jelly.DTO.JellyStartAgingReqDTO;
 import com.server.tdMindJelly.jelly.DTO.JellyUpdateReqDTO;
 import com.server.tdMindJelly.jelly.DTO.JellyUpdateResDTO;
 
@@ -72,5 +74,13 @@ public class JellyController {
     public ResponseEntity<List<JellyDrawerResDTO>> getJellyList(@PathVariable Long userId) {
         List<JellyDrawerResDTO> jellyList = jellyService.getJellyList(userId);
         return ResponseEntity.ok(jellyList);
+    }
+
+    // 숙성 시작 — 대상 젤리를 숙성 상태로 전환 (서랍에서 제외, 에이징룸에 표시)
+    @PatchMapping("/{jellyId}")
+    public ResponseEntity<Void> startAging(@PathVariable Long jellyId,
+                                           @RequestBody JellyStartAgingReqDTO reqDTO) {
+        jellyService.startAging(jellyId, reqDTO);
+        return ResponseEntity.ok().build();
     }
 }

@@ -56,6 +56,13 @@ public class JellyService {
         return jelly;
     }
 
+    // 숙성 시작 — 대상 젤리의 isAging을 true로 전환 (@Transactional 더티체킹으로 저장)
+    public void startAging(Long jellyId, JellyStartAgingReqDTO reqDTO){
+        Jelly jelly = jellyRepository.findById(jellyId).orElseThrow(() -> new EntityNotFoundException("Jelly not found"));
+        authenticatedUserService.assertCurrentUser(jelly.getUserId());
+        jelly.startAging();
+    }
+
     // 젤리 상세 정보 출력
     public JellyResDTO getJellyById(Long jellyId){
         Jelly entity = jellyRepository.findById(jellyId).orElseThrow(() -> new EntityNotFoundException("Jelly not found"));
