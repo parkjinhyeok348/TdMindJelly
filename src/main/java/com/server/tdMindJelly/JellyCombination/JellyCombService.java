@@ -41,4 +41,13 @@ public class JellyCombService {
         return "/images/" + jellyIconName;
     }
 
+    // 감정 조합으로 jellyCombId 반환 (오늘의 젤리 저장 시 사용, 아이콘 조회와 동일하게 isAwaken=false)
+    public Long getJellyCombId(Long firstEmo, Long secondEmo){
+        JellyCombination comb = jellyCombRepository.findByFirstEmoAndSecondEmoAndIsAwaken(firstEmo, secondEmo, false);
+        if (comb == null) {
+            throw new EntityNotFoundException("JellyCombination not found for given emotions");
+        }
+        return comb.getJellyCombId();
+    }
+
 }

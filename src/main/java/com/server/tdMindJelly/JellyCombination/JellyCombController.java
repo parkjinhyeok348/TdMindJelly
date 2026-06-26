@@ -43,4 +43,12 @@ public class JellyCombController {
         // JSON 파싱 오류(malformed JSON) 방지를 위해 쌍따옴표를 포함한 JSON 문자열 반환
         return ResponseEntity.ok("\"" + jellyIcon + "\"");
     }
+
+    // 감정 조합으로 jellyCombId 반환 (오늘의 젤리 저장 시 사용)
+    @GetMapping("/jelly-comb-id/{firstEmo}/{secondEmo}")
+    public ResponseEntity<Long> getJellyCombId(
+            @PathVariable("firstEmo") Long firstEmo,
+            @PathVariable("secondEmo") Long secondEmo) {
+        return ResponseEntity.ok(jellyCombService.getJellyCombId(firstEmo, secondEmo));
+    }
 }
