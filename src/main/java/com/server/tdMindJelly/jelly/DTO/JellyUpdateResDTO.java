@@ -24,12 +24,14 @@ import java.util.List;
 @NoArgsConstructor
 public class JellyUpdateResDTO {
     private String jellyName; //젤리 이름
+    private String title; // 일기 제목
     private String content; // 젤리에 남길 메모
     private List<JellyImageResDTO> jellyImages; //젤리에 들어갈 사진 리스트
 
     @Builder
-    public JellyUpdateResDTO(String jellyName, String content, List<JellyImage> jellyImages){
+    public JellyUpdateResDTO(String jellyName, String title, String content, List<JellyImage> jellyImages){
         this.jellyName = jellyName;
+        this.title = title;
         this.content = content;
         this.jellyImages = jellyImages.stream()
                 .map(JellyImageResDTO::new)

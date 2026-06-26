@@ -3,6 +3,7 @@ package com.server.tdMindJelly.jelly;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -81,6 +82,13 @@ public class JellyController {
     public ResponseEntity<Void> startAging(@PathVariable Long jellyId,
                                            @RequestBody JellyStartAgingReqDTO reqDTO) {
         jellyService.startAging(jellyId, reqDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    // 젤리 삭제
+    @DeleteMapping("/{jellyId}")
+    public ResponseEntity<Void> deleteJelly(@PathVariable Long jellyId) {
+        jellyService.deleteJelly(jellyId);
         return ResponseEntity.ok().build();
     }
 }

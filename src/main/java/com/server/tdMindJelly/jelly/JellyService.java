@@ -45,15 +45,22 @@ public class JellyService {
     public JellyUpdateResDTO getJellyInfo(Long jellyId){
         Jelly jelly = jellyRepository.findById(jellyId).orElseThrow(() -> new EntityNotFoundException("Jelly not found"));
         authenticatedUserService.assertCurrentUser(jelly.getUserId());
-        return new JellyUpdateResDTO(jelly.getJellyName(), jelly.getContent(), jelly.getJellyImages());
+        return new JellyUpdateResDTO(jelly.getJellyName(), jelly.getTitle(), jelly.getContent(), jelly.getJellyImages());
     }
 
     //젤리 정보 업데이트
     public Jelly updateJelly(Long jellyId,JellyUpdateReqDTO reqDTO){
         Jelly jelly = jellyRepository.findById(jellyId).orElseThrow(() -> new EntityNotFoundException("Jelly not found"));
         authenticatedUserService.assertCurrentUser(jelly.getUserId());
-        jelly.updateJelly(reqDTO.getJellyName(), reqDTO.getContent(), reqDTO.getJellyImages());
+        jelly.updateJelly(reqDTO.getJellyName(), reqDTO.getTitle(), reqDTO.getContent(), reqDTO.getJellyImages());
         return jelly;
+    }
+
+    //젤리 삭제 (본인 확인 후 삭제, 이미지는 cascade 삭제)
+    public void deleteJelly(Long jellyId){
+        Jelly jelly = jellyRepository.findById(jellyId).orElseThrow(() -> new EntityNotFoundException("Jelly not found"));
+        authenticatedUserService.assertCurrentUser(jelly.getUserId());
+        jellyRepository.delete(jelly);
     }
 
     // 숙성 시작 — 대상 젤리의 isAging을 true로 전환 (@Transactional 더티체킹으로 저장)

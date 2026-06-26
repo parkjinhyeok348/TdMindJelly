@@ -96,9 +96,10 @@ public class Jelly {
         this.isAging = true;
     }
 
-    public void updateJelly(String jellyName, String content,
+    public void updateJelly(String jellyName, String title, String content,
                            List<JellyImage> jellyImages){
         this.jellyName = (jellyName != null && !jellyName.isBlank())? jellyName:this.jellyName;
+        this.title = (title != null && !title.isBlank())? title:this.title;
         this.content = (content != null&& !content.isBlank())? content:this.content;
         if(jellyImages !=null){
             this.jellyImages.clear();
